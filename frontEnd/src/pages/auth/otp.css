@@ -1,0 +1,28 @@
+/* In your stylesheet or component file */
+.otp-input-container {
+    width: 80%;
+    height:auto;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .otp-input {
+    width: 100%;
+    height: auto;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    text-align: center;
+  }
+  /* In your stylesheet or component file */
+.otp-input-container .OTPInput__input {
+    width: 100px;
+    height: 100px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    text-align: center;
+  }
+  
+  

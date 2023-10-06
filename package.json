@@ -1,0 +1,20 @@
+{
+  "name": "pamojatalkbackend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "install-server":"npm install --prefix backEnd",
+    "install-client":"npm install --prefix frontEnd",
+    "install": "npm run install-server && npm run install-client",
+    "server":"npm run dev --prefix backEnd",
+    "client":"npm start --prefix frontEnd",
+    "start":"npm run server & npm run client",
+    "deploy":"npm run build --prefix frontEnd  && npm run cluster --prefix backEnd",
+    "test": "echo \"Error: no test specified\" && exit 1"
+
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
