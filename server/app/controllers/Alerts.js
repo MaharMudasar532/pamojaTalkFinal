@@ -1,7 +1,7 @@
 
 const Alerts = require('../models/Alerts');
 const geolib = require('geolib');
-const User = require('../models/User');
+const User = require('../models/user.js');
 
 exports.create = async (req, res) => {
 	try {

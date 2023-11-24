@@ -7,7 +7,7 @@ const socketIo = require('socket.io');
 const app = express();
 require('dotenv').config();
 const PORT = process.env.PORT || 8000;
-const Chat = require('./app/models/Chat.js');
+const Chat = require('./app/models/chat.js');
 const Message = require('./app/models/Message.js');
 const User = require('./app/models/User.js');
 const mongoose = require('mongoose');

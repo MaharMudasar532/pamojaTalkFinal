@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const User = require('../models/user.js');
 const secretKey = 'jdfbdsjkfdsahfohajkslcnlmnclskjdiohgvkdsvljbmdscljdvnkdjvndsvmksdjvasckdgmsdvnkascmksvnkcjsdvnkdsvslkdvjsdvakvsdsdv';
 
 module.exports = (socket, next) => {
