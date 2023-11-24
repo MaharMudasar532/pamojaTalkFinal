@@ -1,5 +1,5 @@
 
-const Alerts = require('../models/alerts.js');
+const Alerts = require('../models/Alerts.js');
 const geolib = require('geolib');
 const User = require('../models/user.js');
 
