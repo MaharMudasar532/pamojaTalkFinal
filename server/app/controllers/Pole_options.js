@@ -1,4 +1,4 @@
-const PoleOption = require('../models/pole_options.js');
+const PoleOption = require('../models/Pole_options.js');
 const VotePole = require('../models/vote_pole.js');
 
 exports.create = async (req, res) => {
