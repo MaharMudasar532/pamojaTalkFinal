@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");;
 const emailOTPBody = require("../utils/emailOTPBody")
-const Admin = require('../models/qdmin.js');
+const Admin = require('../models/admin.js');
 const OTP = require('../models/otp.js');
 const User = require('../models/user.js'); 
 
