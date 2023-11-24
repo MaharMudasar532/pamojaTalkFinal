@@ -4,17 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "install-server":"npm install --prefix backEnd",
-    "install-client":"npm install --prefix frontEnd",
-    "install": "npm run install-server && npm run install-client",
-    "server":"npm run dev --prefix backEnd",
-    "client":"npm start --prefix frontEnd",
-    "start":"npm run server & npm run client",
-    "deploy":"npm run build --prefix frontEnd  && npm run cluster --prefix backEnd",
+    "install-server": "npm install --prefix server",
+    "install-client": "npm install --prefix client",
+    "install": "npm run install-client && npm run install-server",
+    "server": "npm run dev --prefix server",
+    "client": "npm start --prefix client",
+    "start": "npm run server & npm run client",
+    "deploy": "npm run build --prefix client  && npm run dev --prefix server",
     "test": "echo \"Error: no test specified\" && exit 1"
-
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "pm2": "^5.3.0"
+  }
 }
