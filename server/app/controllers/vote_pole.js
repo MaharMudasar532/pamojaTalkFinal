@@ -1,4 +1,4 @@
-const VotePole = require('../models/vote_pole');
+const VotePole = require('../models/vote_pole.js');
 
 exports.votePole = async (req, res) => {
     try {

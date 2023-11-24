@@ -1,6 +1,6 @@
-const LikeItem = require('../models/LikeItem');
-const User = require('../models/User');
-const Item = require('../models/Item');
+const LikeItem = require('../models/LikeItem.js');
+const User = require('../models/user.js');
+const Item = require('../models/item.js');
 
 exports.likeItem = async (req, res) => {
     try {

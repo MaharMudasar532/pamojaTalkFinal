@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const Admin = require('../models/Admin');
-const OTP = require('../models/Otp'); 
+const Admin = require('../models/admin.js');
+const OTP = require('../models/otp.js'); 
 
 exports.signUp = async (req, res) => {
     if (!req.body.email || req.body.email === '') {

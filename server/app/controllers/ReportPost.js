@@ -1,6 +1,6 @@
 const ReportPost = require('../models/ReportPost');
-const User = require('../models/User');
-const Post = require('../models/posts');
+const User = require('../models/user.js');
+const Post = require('../models/posts.js');
 
 exports.ReportPost = async (req, res) => {
 	try {

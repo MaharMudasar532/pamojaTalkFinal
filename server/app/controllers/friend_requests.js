@@ -1,5 +1,5 @@
-const FriendRequest = require('../models/friend_requests'); // Import your model
-const User = require('../models/User'); // Import your user model
+const FriendRequest = require('../models/friend_requests.js'); // Import your model
+const User = require('../models/user.js'); // Import your user model
 const mongoose = require('mongoose');
 
 // Send a friend request

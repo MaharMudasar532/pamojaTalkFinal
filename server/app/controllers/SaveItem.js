@@ -1,6 +1,6 @@
 const SaveItem = require('../models/SaveItem');
-const User = require('../models/User');
-const Item = require('../models/Item');
+const User = require('../models/user.js');
+const Item = require('../models/item.js');
 
 exports.saveItem = async (req, res) => {
     try {

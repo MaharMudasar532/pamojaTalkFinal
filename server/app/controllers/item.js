@@ -1,10 +1,10 @@
 
 const { sql } = require("../config/db.config");
 const fs = require("fs");
-const Item = require('../models/Item');
-const User = require('../models/User');
-const Admin = require('../models/Admin');
-const Category = require('../models/category');
+const Item = require('../models/item.js');
+const User = require('../models/user.js');
+const Admin = require('../models/admin.js');
+const Category = require('../models/category.js');
 const { ObjectId } = require("mongodb");
 exports.create = async (req, res) => {
     try {

@@ -1,6 +1,6 @@
 const ReportItem = require('../models/ReportItem');
-const User = require('../models/User');
-const Item = require('../models/Item');
+const User = require('../models/user.js');
+const Item = require('../models/item.js');
 
 exports.ReportItem = async (req, res) => {
 	try {

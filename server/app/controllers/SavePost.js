@@ -1,6 +1,6 @@
 const SavePost = require('../models/SavePost');
-const User = require('../models/User');
-const Post = require('../models/posts');
+const User = require('../models/user.js');
+const Post = require('../models/posts.js');
 
 exports.savePost = async (req, res) => {
     try {

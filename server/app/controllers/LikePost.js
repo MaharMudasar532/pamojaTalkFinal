@@ -1,5 +1,5 @@
-const LikePost = require('../models/LikePost');
-const User = require('../models/User');
+const LikePost = require('../models/LikePost.js');
+const User = require('../models/user.js');
 const Post = require('../models/posts');
 
 exports.likePost = async (req, res) => {

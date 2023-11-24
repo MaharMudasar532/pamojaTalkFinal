@@ -1,4 +1,4 @@
-const Ads = require('../models/Ads');
+const Ads = require('../models/ads.js');
 
 exports.Add = async (req, res) => {
     try {

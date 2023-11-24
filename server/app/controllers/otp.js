@@ -4,9 +4,9 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");;
 const emailOTPBody = require("../utils/emailOTPBody")
-const Admin = require('../models/Admin');
-const OTP = require('../models/Otp');
-const User = require('../models/User'); 
+const Admin = require('../models/qdmin.js');
+const OTP = require('../models/otp.js');
+const User = require('../models/user.js'); 
 
 const transporter = nodemailer.createTransport({
     service: "gmail",

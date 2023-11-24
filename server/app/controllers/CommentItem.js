@@ -1,6 +1,6 @@
-const CommentItem = require('../models/CommentItem');
-const User = require('../models/User');
-const Item = require('../models/Item');
+const CommentItem = require('../models/CommentItem.js');
+const User = require('../models/user.js');
+const Item = require('../models/item.js');
 
 exports.CommentItem = async (req, res) => {
 	try {

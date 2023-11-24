@@ -3,12 +3,12 @@ const moment = require('moment');
 const jwt = require("jsonwebtoken");
 const TOKEN = 'jdfbdsjkfdsahfohajkslcnlmnclskjdiohgvkdsvljbmdscljdvnkdjvndsvmksdjvasckdgmsdvnkascmksvnkcjsdvnkdsvslkdvjsdvakvsdsdv';
 const geolib = require('geolib');
-const User = require('../models/User');
-const OTP = require('../models/Otp');
-const Item = require('../models/Item');
-const Posts = require('../models/posts'); // Import the Posts model with the correct capitalization
-const Chat = require('../models/Chat');
-const Message = require('../models/Message');
+const User = require('../models/user.js');
+const OTP = require('../models/otp.js');
+const Item = require('../models/item.js');
+const Posts = require('../models/posts.js'); // Import the Posts model with the correct capitalization
+const Chat = require('../models/chat.js');
+const Message = require('../models/message.js');
 const { ObjectId } = require("mongodb");
 
 exports.signUp = async (req, res) => {

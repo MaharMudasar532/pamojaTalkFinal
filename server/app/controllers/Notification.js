@@ -1,12 +1,12 @@
 
 const { sql } = require("../config/db.config");
 const fs = require("fs");
-const Item = require('../models/Item');
-const User = require('../models/User');
-const Admin = require('../models/Admin');
-const Category = require('../models/category');
-const Notification = require('../models/Notification');
-const Post = require('../models/posts');
+const Item = require('../models/item.js');
+const User = require('../models/user.js');
+const Admin = require('../models/admin.js');
+const Category = require('../models/category.js');
+const Notification = require('../models/notification.js');
+const Post = require('../models/posts.js');
 const axios = require('axios');
 const mongoose = require('mongoose'); // Make sure to import mongoose
 

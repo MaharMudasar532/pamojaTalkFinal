@@ -1,6 +1,6 @@
-const CommentPost = require('../models/CommentPost');
-const User = require('../models/User');
-const Post = require('../models/posts');
+const CommentPost = require('../models/CommentPost.js');
+const User = require('../models/user.js');
+const Post = require('../models/posts.js');
 
 exports.CommentPost = async (req, res) => {
 	try {

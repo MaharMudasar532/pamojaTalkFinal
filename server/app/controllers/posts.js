@@ -4,9 +4,9 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const fastcsv = require("fast-csv");
 const fs = require("fs");
-const Admin = require('../models/Admin');
-const User = require('../models/User');
-const Post = require('../models/posts');
+const Admin = require('../models/admin.js');
+const User = require('../models/user.js');
+const Post = require('../models/posts.js');
 
 exports.create = async (req, res) => {
     try {
