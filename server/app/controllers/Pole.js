@@ -2,8 +2,8 @@
 const fastcsv = require("fast-csv");
 const fs = require("fs");
 const { listenerCount } = require("process");
-const Pole = require('../models/pole.js');
-const Option = require('../models/pole_options.js');
+const Pole = require('../models/Pole.js');
+const Option = require('../models/Pole_options.js');
 const VotePole = require('../models/vote_pole.js');
 const mongoose = require('mongoose');
 exports.create = async (req, res) => {
