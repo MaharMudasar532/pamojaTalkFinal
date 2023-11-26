@@ -3,12 +3,12 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const http = require('http'); // Import the 'http' module
-const socketIo = require('socket.io');
+// const socketIo = require('socket.io');
 const app = express();
 require('dotenv').config();
-const PORT = process.env.PORT || 8000;
-const Chat = require('./app/models/chat.js');
-const Message = require('./app/models/message.js');
+const PORT = process.env.PORT || 8003;
+// const Chat = require('./app/models/chat.js');
+// const Message = require('./app/models/message.js');
 const User = require('./app/models/user.js');
 const mongoose = require('mongoose');
 const path = require('path')
@@ -33,99 +33,99 @@ app.get("/", (req, res) => {
 const server = http.createServer(app);
 
 // Set up WebSocket server using socket.io
-const io = socketIo(server, {
-  cors: {
-    origin: '*',
-    methods: 'GET,PUT,POST,DELETE',
-    optionsSuccessStatus: 204,
-  },
-});
+// const io = socketIo(server, {
+//   cors: {
+//     origin: '*',
+//     methods: 'GET,PUT,POST,DELETE',
+//     optionsSuccessStatus: 204,
+//   },
+// });
 
 
 app.get("/*",(req,res)=>{
   res.sendFile(__dirname,'public','index.html')
 })
 
-const socketAuth = require('./app/middlewares/socketAuth.js');
+// const socketAuth = require('./app/middlewares/socketAuth.js');
 
-io.of('/api/socket').use(socketAuth).on("connect", (socket) => {
-  console.log("User Connected: " + socket.id);
+// io.of('/api/socket').use(socketAuth).on("connect", (socket) => {
+//   console.log("User Connected: " + socket.id);
 
-  // Handle a new message event
-  socket.on('SendMessage', async (messageData) => {
-    try {
-      // Find the chat room based on the provided chat ID
-      const chat = await Chat.findOne({ _id: messageData.chat_id });
+//   // Handle a new message event
+//   socket.on('SendMessage', async (messageData) => {
+//     try {
+//       // Find the chat room based on the provided chat ID
+//       const chat = await Chat.findOne({ _id: messageData.chat_id });
 
-      if (!chat) {
-        // Handle the case where the chat room does not exist
-        socket.emit('messageError', { error: 'Chat not found' });
-        return;
-      }
+//       if (!chat) {
+//         // Handle the case where the chat room does not exist
+//         socket.emit('messageError', { error: 'Chat not found' });
+//         return;
+//       }
 
-      if (messageData.images && messageData.images.length > 0) {
-        // Handle multiple image uploads using Multer
-        const uploadedImageUrls = [];
+//       if (messageData.images && messageData.images.length > 0) {
+//         // Handle multiple image uploads using Multer
+//         const uploadedImageUrls = [];
 
-        upload.array('images')(socket.request, socket.request.res, async (err) => {
-          if (err) {
-            console.error(err);
-            socket.emit('messageError', { error: 'Image upload failed' });
-            return;
-          }
+//         upload.array('images')(socket.request, socket.request.res, async (err) => {
+//           if (err) {
+//             console.error(err);
+//             socket.emit('messageError', { error: 'Image upload failed' });
+//             return;
+//           }
 
-          // Images were successfully uploaded, and the file details are available in request.files
-          const uploadedImages = socket.request.files;
+//           // Images were successfully uploaded, and the file details are available in request.files
+//           const uploadedImages = socket.request.files;
 
-          for (const image of uploadedImages) {
-            uploadedImageUrls.push(image.path);
-          }
+//           for (const image of uploadedImages) {
+//             uploadedImageUrls.push(image.path);
+//           }
 
-          // Create a new message with the array of image URLs
-          const newMessage = new Message({
-            chat: messageData.chat_id,
-            sender: messageData.sender,
-            text: messageData.text,
-            images: uploadedImageUrls,
-            status: messageData.status,
-            createdAt: messageData.createdAt
-          });
+//           // Create a new message with the array of image URLs
+//           const newMessage = new Message({
+//             chat: messageData.chat_id,
+//             sender: messageData.sender,
+//             text: messageData.text,
+//             images: uploadedImageUrls,
+//             status: messageData.status,
+//             createdAt: messageData.createdAt
+//           });
 
-          // Save the message to the database
-          await newMessage.save();
+//           // Save the message to the database
+//           await newMessage.save();
 
-          // Broadcast the message to all connected clients in the same room
-          socket.to(messageData.chat_id).emit('GetNewMessage', newMessage);
-        });
-      } else {
-        // No images attached, create a message without images
-        const newMessage = new Message({
-          chat: messageData.chat_id,
-          sender: messageData.sender,
-          text: messageData.text,
-          images: [],
-          status: messageData.status,
-          createdAt: messageData.createdAt
-        });
+//           // Broadcast the message to all connected clients in the same room
+//           socket.to(messageData.chat_id).emit('GetNewMessage', newMessage);
+//         });
+//       } else {
+//         // No images attached, create a message without images
+//         const newMessage = new Message({
+//           chat: messageData.chat_id,
+//           sender: messageData.sender,
+//           text: messageData.text,
+//           images: [],
+//           status: messageData.status,
+//           createdAt: messageData.createdAt
+//         });
 
-        // Save the message to the database
-        await newMessage.save();
+//         // Save the message to the database
+//         await newMessage.save();
 
-        // Broadcast the message to all connected clients in the same room
-        socket.to(messageData.chat_id).emit('GetNewMessage', newMessage);
-      }
-    } catch (error) {
-      // Handle any errors that may occur during message processing
-      console.error(error);
-      socket.emit('messageError', { error: 'Message could not be sent' });
-    }
-  });
+//         // Broadcast the message to all connected clients in the same room
+//         socket.to(messageData.chat_id).emit('GetNewMessage', newMessage);
+//       }
+//     } catch (error) {
+//       // Handle any errors that may occur during message processing
+//       console.error(error);
+//       socket.emit('messageError', { error: 'Message could not be sent' });
+//     }
+//   });
 
-  // Handle disconnection
-  socket.on('disconnect', () => {
-    console.log("User Disconnected");
-  });
-});
+//   // Handle disconnection
+//   socket.on('disconnect', () => {
+//     console.log("User Disconnected");
+//   });
+// });
 
 // Start the combined server for both HTTP and WebSocket
 server.listen(PORT, () => {
@@ -157,5 +157,5 @@ require("./app/routes/ReportItem.js")(app);
 require("./app/routes/ReportPost.js")(app);
 require("./app/routes/Notifications.js")(app);
 
-app.use("/chat", require("./app/routes/chat.js"));
-app.use("/chat/message", require("./app/routes/messages.js"));
+// app.use("/chat", require("./app/routes/chat.js"));
+// app.use("/chat/message", require("./app/routes/messages.js"));

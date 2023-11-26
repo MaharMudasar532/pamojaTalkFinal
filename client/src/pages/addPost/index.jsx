@@ -79,7 +79,7 @@ const Team = () => {
 
 
     const handleAdd = async (e) => {
-        e.preventDefault();
+        // e.preventDefault();
         setIsloading(true)
         console.log(Description)
         console.log(Files)

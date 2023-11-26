@@ -1,21 +1,22 @@
-FROM node:lts-alpine
+FROM node:18.15.0
 
 WORKDIR /app
 
-# Copy both client and server package.json files
-COPY package*.json ./ 
-COPY client/package*.json ./client/
-COPY server/package*.json ./server/
+COPY package*.json ./
 
-# RUN npm install-server --only=production
+COPY client/ client/
+COPY client/package*.json client/
+COPY server/package*.json server/
+RUN npm run install-client --only=production
 
-# Install dependencies
-RUN npm install --only=production
+RUN npm run install-server --only=production
 
-COPY . .
+RUN npm run build --prefix client
+
+COPY server/ server/
 
 USER node
 
-CMD [ "npm", "start"]
+CMD [ "npm", "deploy" ]
 
 EXPOSE 8000
