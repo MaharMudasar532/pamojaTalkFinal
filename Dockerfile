@@ -17,6 +17,6 @@ COPY server/ server/
 
 USER node
 
-CMD [ "npm", "deploy" ]
+CMD [ "npm","run", "deploy" ]
 
 EXPOSE 8000
