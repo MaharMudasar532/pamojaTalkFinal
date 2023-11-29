@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 // Define the schema for the User
 const UserSchema = new mongoose.Schema({
-	name: {
+	user_name: {
 		type: String,
 	},
 	bio: {
