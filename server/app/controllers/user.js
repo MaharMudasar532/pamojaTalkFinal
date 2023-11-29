@@ -220,7 +220,7 @@ exports.updateProfile = async (req, res) => {
 		console.log(req.body.block_status)
 		// Map the request body fields to the corresponding user fields
 		const updateFields = {
-			username: req.body.username || user.username,
+			user_name: req.body.user_name || user.user_name,
 			email: req.body.email || user.email,
 			signup_type: req.body.signup_type || user.signup_type,
 			gender: req.body.gender || user.gender,
