@@ -48,6 +48,9 @@ const UserSchema = new mongoose.Schema({
 	updated_at: {
 		type: String
 	},
+	user_name:{
+		type:String
+	}
 
 });
 

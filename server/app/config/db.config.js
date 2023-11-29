@@ -3,8 +3,8 @@ require('dotenv').config();
 
 // Define your MongoDB connection URI
 // const mongoURI = process.env.mongoURI;
-// const mongoURI = "mongodb://localhost:27017/pamojaTalk"
-const mongoURI = "mongodb+srv://pamojaTalk:pamojaTalk@cluster0.01fkdqi.mongodb.net/pamojaTalk"
+const mongoURI = "mongodb://localhost:27017/pamojaTalk"
+// const mongoURI = "mongodb+srv://pamojaTalk:pamojaTalk@cluster0.01fkdqi.mongodb.net/pamojaTalk"
 
 
 // MongoDB connection options (optional)

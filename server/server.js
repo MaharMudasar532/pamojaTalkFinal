@@ -14,9 +14,16 @@ const mongoose = require('mongoose');
 const path = require('path')
 const upload = require("./app/middlewares/FolderImagesMulter.js")
 
+// app.use(cors({ origin: "https://pamoja-mzsp.vercel.app/" }))
 app.use(cors({ origin: '*' }));
-app.use(cors({ origin: "http://localhost:3000" }))
-app.use(express.static(path.join(__dirname, '..' , 'public')))
+// Use CORS middleware
+app.use(cors({
+  origin: 'https://pamoja-mzsp.vercel.app',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,  // enable credentials (cookies, authorization headers, etc.)
+}));
+// app.use(cors({ origin: "http://localhost:3000" }))
+// app.use(express.static(path.join(__dirname, '..', 'public')))
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.json());
@@ -42,8 +49,8 @@ const server = http.createServer(app);
 // });
 
 
-app.get("/*",(req,res)=>{
-  res.sendFile(__dirname,'public','index.html')
+app.get("/*", (req, res) => {
+  res.sendFile(__dirname, 'public', 'index.html')
 })
 
 // const socketAuth = require('./app/middlewares/socketAuth.js');
