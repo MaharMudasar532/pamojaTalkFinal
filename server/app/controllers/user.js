@@ -610,7 +610,6 @@ exports.getUserAndLastMessages = async (req, res) => {
 
 
 
-
 exports.getUser_AllDetails = async (req, res) => {
 	const { user_id } = req.body;
 	try {
@@ -624,24 +623,124 @@ exports.getUser_AllDetails = async (req, res) => {
 		} else {
 			const user = await User.aggregate([
 				{
-					$match: { _id: new ObjectId(user_id) }
+					$match: { _id: new ObjectId(user_id) },
 				},
 				{
 					$lookup: {
 						from: 'posts',
 						localField: '_id',
 						foreignField: 'user_id',
-						as: 'posts'
-					}
+						as: 'posts',
+					},
 				},
 				{
 					$lookup: {
 						from: 'items',
 						localField: '_id',
 						foreignField: 'user_id',
-						as: 'items'
-					}
-				}
+						as: 'items',
+					},
+				},
+				{
+					$lookup: {
+						from: 'likeposts',
+						localField: 'posts._id',
+						foreignField: 'post_id',
+						as: 'likes',
+					},
+				},
+				{
+					$lookup: {
+						from: 'commentposts',
+						localField: 'posts._id',
+						foreignField: 'post_id',
+						as: 'comments',
+					},
+				},
+				{
+					$lookup: {
+						from: 'likeitems',
+						localField: 'items._id',
+						foreignField: 'item_id',
+						as: 'likeitems',
+					},
+				},
+				{
+					$lookup: {
+						from: 'commentitems',
+						localField: 'items._id',
+						foreignField: 'item_id',
+						as: 'commentitems',
+					},
+				},
+				{
+					$project: {
+						_id: 1,
+						user_name: 1,
+						posts: {
+							$map: {
+								input: '$posts',
+								as: 'post',
+								in: {
+									$mergeObjects: [
+										'$$post',
+										{
+											likesCount: {
+												$size: {
+													$filter: {
+														input: '$likes',
+														as: 'like',
+														cond: { $eq: ['$$like.post_id', '$$post._id'] },
+													},
+												},
+											},
+											commentsCount: {
+												$size: {
+													$filter: {
+														input: '$comments',
+														as: 'comment',
+														cond: { $eq: ['$$comment.post_id', '$$post._id'] },
+													},
+												},
+											},
+										},
+									],
+								},
+							},
+						},
+						items: {
+							$map: {
+								input: '$items',
+								as: 'item',
+								in: {
+									$mergeObjects: [
+										'$$item',
+										{
+											likesCount: {
+												$size: {
+													$filter: {
+														input: '$likeitems',
+														as: 'like',
+														cond: { $eq: ['$$like.item_id', '$$item._id'] },
+													},
+												},
+											},
+											commentsCount: {
+												$size: {
+													$filter: {
+														input: '$commentitems',
+														as: 'comment',
+														cond: { $eq: ['$$comment.item_id', '$$item._id'] },
+													},
+												},
+											},
+										},
+									],
+								},
+							},
+						},
+					},
+				},
 			]);
 
 			if (user.length === 0) {
@@ -656,7 +755,6 @@ exports.getUser_AllDetails = async (req, res) => {
 				message: 'User fetched',
 				result: user[0],
 			});
-
 		}
 	} catch (err) {
 		res.json({
@@ -665,3 +763,6 @@ exports.getUser_AllDetails = async (req, res) => {
 		});
 	}
 };
+
+
+
