@@ -82,7 +82,7 @@ exports.viewItem_By_Category = async (req, res) => {
     try {
         const { limit, page, category_id } = req.body;
         const id = new ObjectId(category_id)
-        const totalItems = await Item.countDocuments({category_id});
+        const totalItems = await Item.countDocuments({ category_id });
 
         let aggregationPipeline = [
             {
@@ -405,7 +405,49 @@ exports.update = async (req, res) => {
 
 exports.search = async (req, res) => {
     try {
-        const items = await Item.find({ item_name: { $regex: `${req.body.item_name}`, $options: 'i' } }).sort({ created_at: -1 });
+        // const items = await Item.find({ item_name: { $regex: `${req.body.item_name}`, $options: 'i' } }).sort({ created_at: -1 });
+
+
+        let aggregationPipeline = [
+            {
+                $match: {
+                    item_name: { $regex: `${req.body.item_name}`, $options: 'i' }
+                }
+            }, {
+                $lookup: {
+                    from: 'users',
+                    localField: 'user_id',
+                    foreignField: '_id',
+                    as: 'user_data',
+                },
+            },
+            {
+                $lookup: {
+                    from: 'admins',
+                    localField: 'user_id',
+                    foreignField: '_id',
+                    as: 'admin_data',
+                },
+            },
+            {
+                $unwind: {
+                    path: '$user_data',
+                    preserveNullAndEmptyArrays: true,
+                },
+            },
+            {
+                $unwind: {
+                    path: '$admin_data',
+                    preserveNullAndEmptyArrays: true,
+                },
+            },
+            {
+                $sort: { created_at: -1 },
+            },
+        ];
+
+        const items = await Item.aggregate(aggregationPipeline);
+
 
         res.json({
             message: "Item Search's data",
