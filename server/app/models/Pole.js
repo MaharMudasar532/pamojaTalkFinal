@@ -6,6 +6,9 @@ const PoleSchema = new mongoose.Schema({
 	question: {
 		type: String,
 	},
+	image: {
+		type: String,
+	},
 	created_at: {
 		type: String
 	},
