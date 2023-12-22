@@ -229,7 +229,7 @@ exports.viewAll = async (req, res) => {
                 },
             },
             {
-                $sort: { created_at: -1 },
+                $sort: { _id: -1 },
             },
         ];
 
