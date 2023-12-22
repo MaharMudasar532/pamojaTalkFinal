@@ -15,9 +15,19 @@ exports.create = async (req, res) => {
             });
         } else {
             const { question } = req.body;
+            let photo = '';
+            if (req.file) {
+                console.log(req.file)
+                const { path } = req.file;
+                photo = path;
+            }
+
 
             const pole = new Pole({
-                question,
+                question: question,
+                image: photo,
+                created_at: Date.now(),
+                updated_at: Date.now(),
             });
 
             const savedPole = await pole.save();
@@ -111,53 +121,54 @@ exports.viewAll = async (req, res) => {
             .skip(skip)
             .limit(pageSize);
 
-            let options = await Option.aggregate([
-                {
-                    $match: {
-                        question_id: { $in: poles.map((pole) => pole._id) },
-                    },
+        let options = await Option.aggregate([
+            {
+                $match: {
+                    question_id: { $in: poles.map((pole) => pole._id) },
                 },
-                {
-                    $lookup: {
-                        from: "vote_poles",
-                        localField: "_id",
-                        foreignField: "option_id",
-                        as: "votes",
-                    },
+            },
+            {
+                $lookup: {
+                    from: "vote_poles",
+                    localField: "_id",
+                    foreignField: "option_id",
+                    as: "votes",
                 },
-                {
-                    $group: {
-                        _id: "$question_id",
-                        options: {
-                            $push: {
-                                id: "$_id",
-                                choice: "$option_text",
-                                votes: { $size: "$votes" },
-                            },
-                        },
-                        voted: {
-                            $max: {
-                                $in: [new mongoose.Types.ObjectId(user_id), "$votes.user_id"],
-                            },
+            },
+            {
+                $group: {
+                    _id: "$question_id",
+                    options: {
+                        $push: {
+                            id: "$_id",
+                            choice: "$option_text",
+                            votes: { $size: "$votes" },
                         },
                     },
+                    voted: {
+                        $max: {
+                            $in: [new mongoose.Types.ObjectId(user_id), "$votes.user_id"],
+                        },
+                    },
                 },
-            ]);
-            
-            // Map poles with options
-            let poleData = poles.map((pole) => ({
-                question: pole.question,
-                pole_id: pole._id,
-                voted: options.find((option) => option._id.toString() === pole._id.toString())?.voted || false, 
-                options: options.find((option) => option._id.toString() === pole._id.toString())?.options || [],
-            }));
-            
-            return res.json({
-                message: "All Pole Details",
-                status: true,
-                count: poles.length,
-                result: poleData,
-            });
+            },
+        ]);
+
+        // Map poles with options
+        let poleData = poles.map((pole) => ({
+            question: pole.question,
+            image: pole.image,
+            pole_id: pole._id,
+            voted: options.find((option) => option._id.toString() === pole._id.toString())?.voted || false,
+            options: options.find((option) => option._id.toString() === pole._id.toString())?.options || [],
+        }));
+
+        return res.json({
+            message: "All Pole Details",
+            status: true,
+            count: poles.length,
+            result: poleData,
+        });
     } catch (err) {
         console.error(err);
         return res.json({
@@ -184,11 +195,19 @@ exports.update = async (req, res) => {
                 let oldQuestion = pole.question;
                 let { question } = req.body;
 
+                let photo = pole.image;
+                if (req.file) {
+                    console.log(req.file)
+                    const { path } = req.file;
+                    photo = path;
+                }
+
                 if (question === undefined || question === '') {
                     question = oldQuestion;
                 }
 
                 pole.question = question;
+                pole.image = photo;
                 let updatedPole = await pole.save();
 
                 return res.json({
