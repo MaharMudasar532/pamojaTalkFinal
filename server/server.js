@@ -22,6 +22,12 @@ app.use(cors({
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,  // enable credentials (cookies, authorization headers, etc.)
 }));
+app.use(cors({
+  origin: "*",
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, 
+}));
+
 // app.use(cors({ origin: "http://localhost:3000" }))
 // app.use(express.static(path.join(__dirname, '..', 'public')))
 app.use(bodyParser.json({ limit: '50mb' }));
